@@ -107,6 +107,8 @@ function update_solution_config(){
         yq e -i '.solution.common.s3.max_start_timeout = 240' solution.yaml
         yq e -i '.solution.common.s3.extra_configuration = ""' solution.yaml
         yq e -i '.solution.common.motr.num_client_inst = 0' solution.yaml
+		echo "Motr Client value: $MOTR_CLIENT "
+	    mclient=$MOTR_CLIENT yq e -i '.solution.common.motr.num_client_inst = env(mclient)' solution.yaml								 
         yq e -i '.solution.common.motr.start_port_num = 29000' solution.yaml
         yq e -i '.solution.common.motr.extra_configuration = ""' solution.yaml
         yq e -i '.solution.common.hax.protocol = "https"' solution.yaml
