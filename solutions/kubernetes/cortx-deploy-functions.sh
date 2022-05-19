@@ -329,7 +329,7 @@ function print_pod_status() {
         SECONDS=0
         date
         while [[ SECONDS -lt 1200 ]] ; do
-            if [ "$DEPLOYMENT_METHOD" == "data-only" ]; then
+            #if [ "$DEPLOYMENT_METHOD" == "data-only" ]; then
                 if kubectl exec -it $(kubectl get pods | awk '/cortx-data/{print $1; exit}') -c cortx-hax -- hctl status > /dev/null ; then
                     if ! kubectl exec -it $(kubectl get pods | awk '/cortx-data/{print $1; exit}') -c cortx-hax -- hctl status| grep -v motr_client | grep -q -E 'unknown|offline|failed'; then
                         kubectl exec -it $(kubectl get pods | awk '/cortx-data/{print $1; exit}') -c cortx-hax -- hctl status
@@ -343,21 +343,21 @@ function print_pod_status() {
                     add_common_separator "hctl status not working yet. Sleeping for 1min...."
                     sleep 60
                 fi
-            else
-                if kubectl exec -it $(kubectl get pods | awk '/cortx-server/{print $1; exit}') -c cortx-hax -- hctl status > /dev/null ; then
-                    if ! kubectl exec -it $(kubectl get pods | awk '/cortx-server/{print $1; exit}') -c cortx-hax -- hctl status| grep -q -E 'unknown|offline|failed'; then
-                        kubectl exec -it $(kubectl get pods | awk '/cortx-server/{print $1; exit}') -c cortx-hax -- hctl status
-                        add_secondary_separator "Time taken for service to start $((SECONDS/60)) mins"
-                        exit 0
-                    else
-                        add_common_separator "Waiting for services to become online. Sleeping for 1min...."
-                        sleep 60
-                    fi
-                else
-                    add_common_separator "hctl status not working yet. Sleeping for 1min...."
-                    sleep 60
-                fi
-            fi    
+            #else
+            #    if kubectl exec -it $(kubectl get pods | awk '/cortx-server/{print $1; exit}') -c cortx-hax -- hctl status > /dev/null ; then
+            #        if ! kubectl exec -it $(kubectl get pods | awk '/cortx-server/{print $1; exit}') -c cortx-hax -- hctl status| grep -q -  E 'unknown|offline|failed'; then
+            #            kubectl exec -it $(kubectl get pods | awk '/cortx-server/{print $1; exit}') -c cortx-hax -- hctl status
+            #            add_secondary_separator "Time taken for service to start $((SECONDS/60)) mins"
+            #            exit 0
+            #        else
+            #            add_common_separator "Waiting for services to become online. Sleeping for 1min...."
+            #            sleep 60
+            #        fi
+            #    else
+            #        add_common_separator "hctl status not working yet. Sleeping for 1min...."
+            #        sleep 60
+            #    fi
+            #fi    
         done
             add_secondary_separator "Failed to to start services within 20mins. Exiting...."
             exit 1
