@@ -112,6 +112,8 @@ function update_solution_config(){
         else
             yq e -i '.solution.common.motr.num_client_inst = 0' solution.yaml
         fi       
+        echo "Motr Client value: $MOTR_CLIENT "
+	    mclient=$MOTR_CLIENT yq e -i '.solution.common.motr.num_client_inst = env(mclient)' solution.yaml
         yq e -i '.solution.common.motr.extra_configuration = ""' solution.yaml
         yq e -i '.solution.common.hax.protocol = "https"' solution.yaml
         yq e -i '.solution.common.hax.port_num = 22003' solution.yaml
