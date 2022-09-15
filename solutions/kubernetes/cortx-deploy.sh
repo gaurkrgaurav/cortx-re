@@ -58,6 +58,7 @@ function check_params() {
     if [ -z "$SOLUTION_CONFIG_TYPE" ]; then echo "SOLUTION_CONFIG_TYPE not provided. Using default : manual"; SOLUTION_CONFIG_TYPE=manual; fi
     if [ -z "$SNS_CONFIG" ]; then SNS_CONFIG="1+0+0"; fi
     if [ -z "$DIX_CONFIG" ]; then DIX_CONFIG="1+0+0"; fi
+    if [ -z "MOTR_CLIENT" ]; then MOTR_CLIENT="0"; fi
     if [ -z "$EXTERNAL_EXPOSURE_SERVICE" ]; then EXTERNAL_EXPOSURE_SERVICE="NodePort"; fi
     if [ -z "$CONTROL_EXTERNAL_NODEPORT" ]; then CONTROL_EXTERNAL_NODEPORT="31169"; fi
     if [ -z "$S3_EXTERNAL_HTTP_NODEPORT" ]; then S3_EXTERNAL_HTTP_NODEPORT="30080"; fi
@@ -74,6 +75,7 @@ function check_params() {
    echo -e "# CORTX_CONTROL_IMAGE        : $CORTX_CONTROL_IMAGE                 "
    echo -e "# DEPLOYMENT_METHOD          : $DEPLOYMENT_METHOD                   "
    echo -e "# SOLUTION_CONFIG_TYPE       : $SOLUTION_CONFIG_TYPE                "
+   echo -e "# MOTR_CLIENT                : $MOTR_CLIENT                         "
    echo -e "# SNS_CONFIG                 : $SNS_CONFIG                          "
    echo -e "# DIX_CONFIG                 : $DIX_CONFIG                          "
    echo -e "# EXTERNAL_EXPOSURE_SERVICE  : $EXTERNAL_EXPOSURE_SERVICE           "
@@ -130,6 +132,7 @@ function setup_cluster() {
     export DEPLOYMENT_METHOD=$DEPLOYMENT_METHOD &&
     export CORTX_SCRIPTS_REPO=$CORTX_SCRIPTS_REPO && 
     export CORTX_SCRIPTS_BRANCH=$CORTX_SCRIPTS_BRANCH && 
+    export MOTR_CLIENT=$MOTR_CLIENT &&
     export SNS_CONFIG=$SNS_CONFIG && 
     export DIX_CONFIG=$DIX_CONFIG &&
     export SYSTEM_DRIVE=$SYSTEM_DRIVE &&
